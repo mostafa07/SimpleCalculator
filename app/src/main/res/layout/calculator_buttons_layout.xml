@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_calculator">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/buttons_container_layout"
@@ -227,8 +227,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/subtract_button"
             style="@style/Widget.App.Button"
-            android:tag="@string/subtract"
-            android:text="@string/subtract"
+            android:tag="@string/minus"
+            android:text="@string/minus"
             app:layout_constraintBottom_toTopOf="@id/add_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vertical_guideline_75"
@@ -237,8 +237,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button"
             style="@style/Widget.App.Button"
-            android:tag="@string/add"
-            android:text="@string/add"
+            android:tag="@string/plus"
+            android:text="@string/plus"
             app:layout_constraintBottom_toTopOf="@id/zero_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vertical_guideline_75"

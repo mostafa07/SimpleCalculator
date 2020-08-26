@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activity.MainActivity">
+        tools:context=".ui.activity.CalculatorActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
 
         <include
-            layout="@layout/main_buttons_layout"
+            layout="@layout/calculator_buttons_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

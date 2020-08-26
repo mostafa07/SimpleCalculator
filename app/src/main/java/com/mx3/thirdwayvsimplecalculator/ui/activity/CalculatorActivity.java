@@ -6,15 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.mx3.thirdwayvsimplecalculator.R;
-import com.mx3.thirdwayvsimplecalculator.databinding.ActivityMainBinding;
+import com.mx3.thirdwayvsimplecalculator.databinding.ActivityCalculatorBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class CalculatorActivity extends AppCompatActivity {
 
-    private ActivityMainBinding mBinding;
+    private ActivityCalculatorBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_calculator);
     }
 }
