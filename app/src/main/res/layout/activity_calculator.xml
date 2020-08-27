@@ -8,6 +8,28 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.CalculatorActivity">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/current_result_text_view"
+            style="@style/Widget.App.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/previous_operations_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="888" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/previous_operations_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current_result_text_view" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline"
             android:layout_width="0dp"
@@ -20,17 +42,17 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toBottomOf="@+id/horizontal_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
+            app:layout_constraintTop_toTopOf="@id/horizontal_guideline" />
 
         <include
             layout="@layout/calculator_buttons_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
+            app:layout_constraintTop_toTopOf="@id/horizontal_guideline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

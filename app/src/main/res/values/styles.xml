@@ -7,6 +7,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Calculator Buttons Styles -->
+
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">32sp</item>
@@ -22,4 +24,17 @@
         <item name="android:tint">@color/colorPrimary</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <!-- Calculation Result TextView Result -->
+    <style name="Widget.App.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeMaxTextSize">64dp</item>
+        <item name="autoSizeMinTextSize">16sp</item>
+        <item name="autoSizeStepGranularity">2sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

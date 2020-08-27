@@ -1,4 +1,4 @@
-package com.mx3.thirdwayvsimplecalculator.ui.data.model;
+package com.mx3.thirdwayvsimplecalculator.data.model;
 
 public abstract class Operator {
 
