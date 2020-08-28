@@ -1,17 +1,22 @@
 package com.mx3.thirdwayvsimplecalculator.data.model;
 
+import java.math.BigDecimal;
+
 public class Operand {
 
-    private Float mValue;
+    private BigDecimal mValue;
 
     // Constructors
 
     public Operand() {
-
     }
 
-    public Operand(Float value) {
+    public Operand(BigDecimal value) {
         this.mValue = value;
+    }
+
+    public Operand(String valueString) {
+        this.mValue = new BigDecimal(valueString);
     }
 
 
@@ -24,11 +29,11 @@ public class Operand {
 
     // Getters and setters
 
-    public Float getValue() {
+    public BigDecimal getValue() {
         return mValue;
     }
 
-    public void setValue(Float value) {
+    public void setValue(BigDecimal value) {
         this.mValue = value;
     }
 }

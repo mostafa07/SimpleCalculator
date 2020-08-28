@@ -11,6 +11,7 @@
             type="com.mx3.thirdwayvsimplecalculator.ui.viewmodel.CalculatorViewModel" />
     </data>
 
+    <!-- TODO fix buttons text size for landscape -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/buttons_container_layout"
@@ -65,6 +66,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/seven_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/seven"
             android:text="@string/seven"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -76,6 +78,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/four_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/four"
             android:text="@string/four"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -87,6 +90,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/one_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/one"
             android:text="@string/one"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -98,6 +102,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dot_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/dot"
             android:text="@string/dot"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -112,6 +117,7 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/redo_button"
             style="@style/Widget.App.ImageButton"
+            android:onClick="@{() -> viewModel.onRedoButtonClicked()}"
             android:src="@drawable/ic_redo"
             android:tag="@string/redo"
             app:buttonEnabled="@{viewModel.isRedoButtonEnabledLiveData}"
@@ -124,6 +130,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/eight_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/eight"
             android:text="@string/eight"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -135,6 +142,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/five_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/five"
             android:text="@string/five"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -146,6 +154,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/two_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/two"
             android:text="@string/two"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -157,6 +166,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/zero_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/zero"
             android:text="@string/zero"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -171,6 +181,7 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/undo_button"
             style="@style/Widget.App.ImageButton"
+            android:onClick="@{() -> viewModel.onUndoButtonClicked()}"
             android:src="@drawable/ic_undo"
             android:tag="@string/undo"
             app:buttonEnabled="@{viewModel.isUndoButtonEnabledLiveData}"
@@ -183,6 +194,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/nine_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/nine"
             android:text="@string/nine"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -194,6 +206,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/six_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/six"
             android:text="@string/six"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -205,6 +218,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/three_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperandButtonClicked(view)}"
             android:tag="@string/three"
             android:text="@string/three"
             app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
@@ -231,6 +245,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/divide_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperatorButtonClicked(view)}"
             android:tag="@string/divide"
             android:text="@string/divide"
             app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
@@ -243,46 +258,50 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/multiply_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperatorButtonClicked(view)}"
             android:tag="@string/multiply"
             android:text="@string/multiply"
             app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
-            app:layout_constraintBottom_toTopOf="@id/subtract_button"
+            app:layout_constraintBottom_toTopOf="@id/minus_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
             app:layout_constraintTop_toBottomOf="@id/divide_button" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/subtract_button"
+            android:id="@+id/minus_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperatorButtonClicked(view)}"
             android:tag="@string/minus"
             android:text="@string/minus"
             app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
-            app:layout_constraintBottom_toTopOf="@id/add_button"
+            app:layout_constraintBottom_toTopOf="@id/plus_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
             app:layout_constraintTop_toBottomOf="@id/eight_button" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/add_button"
+            android:id="@+id/plus_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{(view) -> viewModel.onOperatorButtonClicked(view)}"
             android:tag="@string/plus"
             android:text="@string/plus"
             app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/zero_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
-            app:layout_constraintTop_toBottomOf="@id/subtract_button" />
+            app:layout_constraintTop_toBottomOf="@id/minus_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/equal_button"
             style="@style/Widget.App.Button"
+            android:onClick="@{() -> viewModel.onEqualButtonClicked()}"
             android:tag="@string/equal"
             android:text="@string/equal"
             app:buttonEnabled="@{viewModel.isEqualButtonEnabledLiveData}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
-            app:layout_constraintTop_toBottomOf="@id/add_button" />
+            app:layout_constraintTop_toBottomOf="@id/plus_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

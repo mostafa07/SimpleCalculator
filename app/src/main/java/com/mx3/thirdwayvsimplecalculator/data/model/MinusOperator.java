@@ -1,15 +1,17 @@
 package com.mx3.thirdwayvsimplecalculator.data.model;
 
+import java.math.BigDecimal;
+
 public class MinusOperator extends Operator {
 
     @Override
-    public Float execute(Operand first, Operand second) {
-        return first.getValue() - second.getValue();
+    public BigDecimal execute(Operand first, Operand second) {
+        return first.getValue().subtract(second.getValue());
     }
 
     @Override
-    public Float reverse(Operand first, Operand second) {
-        return first.getValue() + second.getValue();
+    public BigDecimal reverse(Operand first, Operand second) {
+        return new PlusOperator().execute(first, second);
     }
 
     @Override

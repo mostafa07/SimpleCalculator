@@ -37,6 +37,7 @@ public class CalculatorActivity extends AppCompatActivity implements OperationRe
     private void setupViewModel() {
         mViewModel = new ViewModelProvider(this).get(CalculatorViewModel.class);
         mBinding.setViewModel(mViewModel);
+        mBinding.setLifecycleOwner(this);
     }
 
     private void setupOperationRecordsRecyclerView() {
@@ -48,6 +49,6 @@ public class CalculatorActivity extends AppCompatActivity implements OperationRe
 
     @Override
     public void onItemClick(Operation operation) {
-        Log.d(LOG_TAG, "onItemClick: " + operation.getFullString());
+        // TODO implement item undo functionality
     }
 }

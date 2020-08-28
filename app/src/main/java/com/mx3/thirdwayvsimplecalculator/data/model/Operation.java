@@ -1,5 +1,7 @@
 package com.mx3.thirdwayvsimplecalculator.data.model;
 
+import java.math.BigDecimal;
+
 public class Operation {
 
     private Operand mFirstOperand;
@@ -11,20 +13,20 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(Operand mFirstOperand, Operand mSecondOperand, Operator mOperator) {
-        this.mFirstOperand = mFirstOperand;
-        this.mSecondOperand = mSecondOperand;
-        this.mOperator = mOperator;
+    public Operation(Operand firstOperand, Operand secondOperand, Operator operator) {
+        this.mFirstOperand = firstOperand;
+        this.mSecondOperand = secondOperand;
+        this.mOperator = operator;
     }
 
 
     // Helper methods
 
-    public Float evaluate() {
+    public BigDecimal evaluate() {
         return mOperator.execute(mFirstOperand, mSecondOperand);
     }
 
-    public Float undo() {
+    public BigDecimal undo() {
         final Operand resultAsFirstOperand = new Operand(mOperator.execute(mFirstOperand, mSecondOperand));
         return mOperator.reverse(resultAsFirstOperand, mFirstOperand);
     }
@@ -52,8 +54,8 @@ public class Operation {
         return mSecondOperand;
     }
 
-    public void setSecondOperand(Operand operator) {
-        this.mSecondOperand = operator;
+    public void setSecondOperand(Operand operand) {
+        this.mSecondOperand = operand;
     }
 
     public Operator getOperator() {

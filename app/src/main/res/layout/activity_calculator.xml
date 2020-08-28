@@ -21,7 +21,7 @@
             style="@style/Widget.App.TextView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@{viewModel.currentResultLiveData}"
+            android:text="@{viewModel.currentOperationLiveData.firstOperand.string}"
             app:layout_constraintBottom_toTopOf="@id/previous_operations_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
