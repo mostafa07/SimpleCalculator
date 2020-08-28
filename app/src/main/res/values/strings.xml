@@ -23,4 +23,7 @@
     <string name="redo">Redo</string>
     <string name="backspace">Backspace</string>
 
+    <!-- Error Message for Division by Zero -->
+    <string name="error_message_cannot_divide_by_zero">Can not Divide By Zero!</string>
+
 </resources>

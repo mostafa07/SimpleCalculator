@@ -1,12 +1,12 @@
 package com.mx3.thirdwayvsimplecalculator.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.mx3.thirdwayvsimplecalculator.R;
 import com.mx3.thirdwayvsimplecalculator.data.model.Operation;
 import com.mx3.thirdwayvsimplecalculator.databinding.ActivityCalculatorBinding;
@@ -35,9 +35,14 @@ public class CalculatorActivity extends AppCompatActivity implements OperationRe
 
 
     private void setupViewModel() {
-        mViewModel = new ViewModelProvider(this).get(CalculatorViewModel.class);
+        mViewModel = new ViewModelProvider(CalculatorActivity.this).get(CalculatorViewModel.class);
         mBinding.setViewModel(mViewModel);
         mBinding.setLifecycleOwner(this);
+
+        mViewModel.getErrorMessageLiveData().observe(CalculatorActivity.this, errorMessage -> {
+            Snackbar.make(mBinding.calculatorButtonsLayout.equalButton, errorMessage.getMessageResourceId(),
+                    Snackbar.LENGTH_LONG).show();
+        });
     }
 
     private void setupOperationRecordsRecyclerView() {

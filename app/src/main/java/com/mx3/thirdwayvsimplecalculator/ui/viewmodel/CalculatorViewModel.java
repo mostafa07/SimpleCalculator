@@ -6,6 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.mx3.thirdwayvsimplecalculator.R;
+import com.mx3.thirdwayvsimplecalculator.data.model.DivideOperator;
+import com.mx3.thirdwayvsimplecalculator.data.model.Message;
 import com.mx3.thirdwayvsimplecalculator.data.model.Operand;
 import com.mx3.thirdwayvsimplecalculator.data.model.Operation;
 import com.mx3.thirdwayvsimplecalculator.data.model.factory.OperatorFactory;
@@ -30,6 +33,8 @@ public class CalculatorViewModel extends ViewModel {
     private MutableLiveData<Boolean> mIsRedoButtonEnabledMutableLiveData;
     private MutableLiveData<Boolean> mIsEqualButtonEnabledMutableLiveData;
 
+    private MutableLiveData<Message> mErrorMessageMutableLiveData;
+
     // Constructor
     public CalculatorViewModel() {
         mCalculatorRepository = CalculatorRepository.getInstance();
@@ -42,6 +47,8 @@ public class CalculatorViewModel extends ViewModel {
         mIsUndoButtonEnabledMutableLiveData = new MutableLiveData<>(false);
         mIsRedoButtonEnabledMutableLiveData = new MutableLiveData<>(false);
         mIsEqualButtonEnabledMutableLiveData = new MutableLiveData<>(false);
+
+        mErrorMessageMutableLiveData = new MutableLiveData<>();
     }
 
 
@@ -77,13 +84,22 @@ public class CalculatorViewModel extends ViewModel {
     public void onEqualButtonClicked() {
         final Operation currentOperation = mCurrentOperationMutableLiveData.getValue();
         if (currentOperation != null) {
-            currentOperation.setSecondOperand(new Operand(mSecondOperandStringMutableLiveData.getValue()));
-            final BigDecimal operationResult = currentOperation.evaluate();
+            if (currentOperation.getOperator() instanceof DivideOperator
+                    && mSecondOperandStringMutableLiveData.getValue().equals(BigDecimal.ZERO.toString())) {
+                mErrorMessageMutableLiveData.setValue(new Message(R.string.error_message_cannot_divide_by_zero));
 
-            // TODO store result into stack
+                final Operand currentResultAsNextFirstOperand = mCurrentOperationMutableLiveData.getValue().getFirstOperand();
+                final Operation nextOperation = new Operation(currentResultAsNextFirstOperand, null, null);
+                mCurrentOperationMutableLiveData.setValue(nextOperation);
+            } else {
+                currentOperation.setSecondOperand(new Operand(mSecondOperandStringMutableLiveData.getValue()));
+                final BigDecimal operationResult = currentOperation.evaluate();
 
-            final Operation nextOperation = new Operation(new Operand(operationResult), null, null);
-            mCurrentOperationMutableLiveData.setValue(nextOperation);
+                // TODO store result into stack
+
+                final Operation nextOperation = new Operation(new Operand(operationResult), null, null);
+                mCurrentOperationMutableLiveData.setValue(nextOperation);
+            }
             mSecondOperandStringMutableLiveData.setValue("");
 
             mIsOperandButtonsEnabledMutableLiveData.setValue(false);
@@ -159,5 +175,13 @@ public class CalculatorViewModel extends ViewModel {
 
     public void setIsEqualButtonEnabledLiveData(boolean isEnabled) {
         this.mIsEqualButtonEnabledMutableLiveData.setValue(isEnabled);
+    }
+
+    public LiveData<Message> getErrorMessageLiveData() {
+        return mErrorMessageMutableLiveData;
+    }
+
+    public void setErrorMessageLiveData(Message message) {
+        this.mErrorMessageMutableLiveData.setValue(message);
     }
 }
