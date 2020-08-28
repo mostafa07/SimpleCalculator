@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/activity_calculator">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mx3.thirdwayvsimplecalculator.ui.viewmodel.CalculatorViewModel" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/buttons_container_layout"
         android:layout_width="0dp"
@@ -40,6 +48,7 @@
 
         <!-- First Column -->
 
+        <!-- TODO implement AC functionality -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ac_button"
             style="@style/Widget.App.Button"
@@ -47,18 +56,20 @@
             android:text="@string/ac"
             android:textSize="28sp"
             app:layout_constraintBottom_toTopOf="@id/seven_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_25"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread" />
+            app:layout_constraintVertical_chainStyle="spread"
+            app:shown="@{false}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/seven_button"
             style="@style/Widget.App.Button"
             android:tag="@string/seven"
             android:text="@string/seven"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/four_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_25"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ac_button" />
 
@@ -67,8 +78,9 @@
             style="@style/Widget.App.Button"
             android:tag="@string/four"
             android:text="@string/four"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/one_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_25"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/seven_button" />
 
@@ -77,8 +89,9 @@
             style="@style/Widget.App.Button"
             android:tag="@string/one"
             android:text="@string/one"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/dot_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_25"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/four_button" />
 
@@ -87,8 +100,9 @@
             style="@style/Widget.App.Button"
             android:tag="@string/dot"
             android:text="@string/dot"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_25"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/one_button" />
 
@@ -100,9 +114,10 @@
             style="@style/Widget.App.ImageButton"
             android:src="@drawable/ic_redo"
             android:tag="@string/redo"
-            app:layout_constraintBottom_toTopOf="@+id/eight_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_50"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_25"
+            app:buttonEnabled="@{viewModel.isRedoButtonEnabledLiveData}"
+            app:layout_constraintBottom_toTopOf="@id/eight_button"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_50"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_25"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
@@ -111,40 +126,44 @@
             style="@style/Widget.App.Button"
             android:tag="@string/eight"
             android:text="@string/eight"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/five_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_50"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_25"
-            app:layout_constraintTop_toBottomOf="@+id/redo_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_50"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_25"
+            app:layout_constraintTop_toBottomOf="@id/redo_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/five_button"
             style="@style/Widget.App.Button"
             android:tag="@string/five"
             android:text="@string/five"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/two_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_50"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_25"
-            app:layout_constraintTop_toBottomOf="@+id/eight_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_50"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_25"
+            app:layout_constraintTop_toBottomOf="@id/eight_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/two_button"
             style="@style/Widget.App.Button"
             android:tag="@string/two"
             android:text="@string/two"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/zero_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_50"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_25"
-            app:layout_constraintTop_toBottomOf="@+id/five_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_50"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_25"
+            app:layout_constraintTop_toBottomOf="@id/five_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/zero_button"
             style="@style/Widget.App.Button"
             android:tag="@string/zero"
             android:text="@string/zero"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_50"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_25"
-            app:layout_constraintTop_toBottomOf="@+id/two_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_50"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_25"
+            app:layout_constraintTop_toBottomOf="@id/two_button" />
 
 
         <!-- Third Column -->
@@ -154,9 +173,10 @@
             style="@style/Widget.App.ImageButton"
             android:src="@drawable/ic_undo"
             android:tag="@string/undo"
-            app:layout_constraintBottom_toTopOf="@+id/eight_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_75"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_50"
+            app:buttonEnabled="@{viewModel.isUndoButtonEnabledLiveData}"
+            app:layout_constraintBottom_toTopOf="@id/eight_button"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_75"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_50"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
@@ -165,40 +185,45 @@
             style="@style/Widget.App.Button"
             android:tag="@string/nine"
             android:text="@string/nine"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/five_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_75"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_50"
-            app:layout_constraintTop_toBottomOf="@+id/redo_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_75"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_50"
+            app:layout_constraintTop_toBottomOf="@id/redo_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/six_button"
             style="@style/Widget.App.Button"
             android:tag="@string/six"
             android:text="@string/six"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/two_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_75"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_50"
-            app:layout_constraintTop_toBottomOf="@+id/eight_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_75"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_50"
+            app:layout_constraintTop_toBottomOf="@id/eight_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/three_button"
             style="@style/Widget.App.Button"
             android:tag="@string/three"
             android:text="@string/three"
+            app:buttonEnabled="@{viewModel.isOperandButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/zero_button"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_75"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_50"
-            app:layout_constraintTop_toBottomOf="@+id/five_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_75"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_50"
+            app:layout_constraintTop_toBottomOf="@id/five_button" />
 
+        <!-- TODO implement backspace functionality -->
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/backspace_button"
             style="@style/Widget.App.ImageButton"
             android:src="@drawable/ic_backspace"
             android:tag="@string/backspace"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_75"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_50"
-            app:layout_constraintTop_toBottomOf="@+id/two_button" />
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline_75"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_50"
+            app:layout_constraintTop_toBottomOf="@id/two_button"
+            app:shown="@{false}" />
 
 
         <!-- Fourth Column -->
@@ -208,9 +233,10 @@
             style="@style/Widget.App.Button"
             android:tag="@string/divide"
             android:text="@string/divide"
+            app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/multiply_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_75"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
@@ -219,39 +245,43 @@
             style="@style/Widget.App.Button"
             android:tag="@string/multiply"
             android:text="@string/multiply"
+            app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/subtract_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_75"
-            app:layout_constraintTop_toBottomOf="@+id/divide_button" />
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
+            app:layout_constraintTop_toBottomOf="@id/divide_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/subtract_button"
             style="@style/Widget.App.Button"
             android:tag="@string/minus"
             android:text="@string/minus"
+            app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/add_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_75"
-            app:layout_constraintTop_toBottomOf="@+id/eight_button" />
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
+            app:layout_constraintTop_toBottomOf="@id/eight_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button"
             style="@style/Widget.App.Button"
             android:tag="@string/plus"
             android:text="@string/plus"
+            app:buttonEnabled="@{viewModel.isOperationButtonsEnabledLiveData}"
             app:layout_constraintBottom_toTopOf="@id/zero_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_75"
-            app:layout_constraintTop_toBottomOf="@+id/subtract_button" />
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
+            app:layout_constraintTop_toBottomOf="@id/subtract_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/equal_button"
             style="@style/Widget.App.Button"
             android:tag="@string/equal"
             android:text="@string/equal"
+            app:buttonEnabled="@{viewModel.isEqualButtonEnabledLiveData}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/vertical_guideline_75"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline_75"
             app:layout_constraintTop_toBottomOf="@id/add_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

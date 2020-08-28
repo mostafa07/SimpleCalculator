@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mx3.thirdwayvsimplecalculator.ui.viewmodel.CalculatorViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,6 +20,7 @@
             style="@style/Widget.App.TextView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:text="@{viewModel.currentResultLiveData}"
             app:layout_constraintBottom_toTopOf="@id/previous_operations_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +60,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/horizontal_guideline" />
+            app:layout_constraintTop_toTopOf="@id/horizontal_guideline"
+            app:viewModel="@{viewModel}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
