@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.CalculatorActivity">
 
+        <!-- TODO add a background color for result text view -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/current_result_text_view"
             style="@style/Widget.App.TextView"
@@ -36,7 +37,8 @@
             app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/current_result_text_view" />
+            app:layout_constraintTop_toBottomOf="@id/current_result_text_view"
+            tools:listitem="@layout/item_operation_record" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline"
