@@ -23,7 +23,7 @@ public class Operand {
     // Helper methods
 
     public String getString() {
-        return String.valueOf(mValue);
+        return mValue.toString();
     }
 
 

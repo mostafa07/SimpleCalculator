@@ -20,7 +20,7 @@ public class Operation {
     }
 
 
-    // Helper methods
+    // Other methods
 
     public BigDecimal evaluate() {
         return mOperator.execute(mFirstOperand, mSecondOperand);

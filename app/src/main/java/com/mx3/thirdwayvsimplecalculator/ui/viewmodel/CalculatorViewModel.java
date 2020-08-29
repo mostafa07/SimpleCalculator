@@ -23,6 +23,7 @@ public class CalculatorViewModel extends ViewModel {
     private static final String LOG_TAG = CalculatorViewModel.class.getSimpleName();
     private static final Operand INITIAL_RESULT = new Operand(BigDecimal.ZERO);
     private static final String DOT_OPERAND = ".";
+    private static final int ZERO_POSITION = 0;
 
     private CalculatorRepository mCalculatorRepository;
 
@@ -99,33 +100,72 @@ public class CalculatorViewModel extends ViewModel {
                 currentOperation.setSecondOperand(new Operand(mSecondOperandStringMutableLiveData.getValue()));
                 final BigDecimal operationResult = currentOperation.evaluate();
 
-                // TODO test insert functionality
                 mCalculatorRepository.insertOperation(currentOperation).subscribe(operation -> {
                     final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
-                    operationRecordsList.add(0, operation);
+                    operationRecordsList.add(ZERO_POSITION, operation);
                     mOperationRecordsMutableLiveData.setValue(operationRecordsList);
                 }, Throwable::printStackTrace);
 
                 final Operation nextOperation = new Operation(new Operand(operationResult), null, null);
                 mCurrentOperationMutableLiveData.setValue(nextOperation);
             }
-            mSecondOperandStringMutableLiveData.setValue("");
 
-            mIsOperandButtonsEnabledMutableLiveData.setValue(false);
-            mIsOperationButtonsEnabledMutableLiveData.setValue(true);
-            mIsUndoButtonEnabledMutableLiveData.setValue(true);
-            mIsRedoButtonEnabledMutableLiveData.setValue(true);
-            mIsEqualButtonEnabledMutableLiveData.setValue(false);
+            resetToInitialStates();
         }
 
     }
 
     public void onUndoButtonClicked() {
-        // TODO implement undo functionality
+        mCalculatorRepository.undoOperation().subscribe(operation -> {
+            final BigDecimal operationUndoResult = mOperationRecordsMutableLiveData.getValue().size() == 1 ?
+                    BigDecimal.ZERO : operation.undo();
+            final Operation nextOperation = new Operation(new Operand(operationUndoResult), null, null);
+            mCurrentOperationMutableLiveData.setValue(nextOperation);
+
+            final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
+            operationRecordsList.remove(ZERO_POSITION);
+            mOperationRecordsMutableLiveData.setValue(operationRecordsList);
+
+            resetToInitialStates();
+        }, Throwable::printStackTrace);
     }
 
     public void onRedoButtonClicked() {
-        // TODO implement redo functionality
+        mCalculatorRepository.redoOperation().subscribe(operation -> {
+            final BigDecimal operationResult = operation.evaluate();
+            final Operation nextOperation = new Operation(new Operand(operationResult), null, null);
+            mCurrentOperationMutableLiveData.setValue(nextOperation);
+
+            final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
+            operationRecordsList.add(ZERO_POSITION, operation);
+            mOperationRecordsMutableLiveData.setValue(operationRecordsList);
+
+            resetToInitialStates();
+        }, Throwable::printStackTrace);
+    }
+
+
+    private void resetToInitialStates() {
+        mSecondOperandStringMutableLiveData.setValue("");
+
+        mIsOperandButtonsEnabledMutableLiveData.setValue(false);
+        mIsOperationButtonsEnabledMutableLiveData.setValue(true);
+
+        mIsEqualButtonEnabledMutableLiveData.setValue(false);
+        mCalculatorRepository.getExecutedOperationsSize().subscribe(size -> {
+            if (size > 0) {
+                mIsUndoButtonEnabledMutableLiveData.setValue(true);
+            } else {
+                mIsUndoButtonEnabledMutableLiveData.setValue(false);
+            }
+        });
+        mCalculatorRepository.getPoppedOperationsSize().subscribe(size -> {
+            if (size > 0) {
+                mIsRedoButtonEnabledMutableLiveData.setValue(true);
+            } else {
+                mIsRedoButtonEnabledMutableLiveData.setValue(false);
+            }
+        });
     }
 
 

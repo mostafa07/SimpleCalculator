@@ -35,7 +35,7 @@ public class CalculatorRepository {
     }
 
 
-    public Observable<List<Operation>> getOperations() {
+    public Observable<List<Operation>> getExecutedOperations() {
         return Observable.create(emitter -> emitter.onNext(mExecutedOperations));
     }
 
@@ -63,6 +63,18 @@ public class CalculatorRepository {
             final Operation operation = mPoppedOperations.pop();
             mExecutedOperations.add(ZERO_POSITION, operation);
             emitter.onNext(operation);
+        });
+    }
+
+    public Observable<Integer> getExecutedOperationsSize() {
+        return Observable.create(emitter -> {
+            emitter.onNext(mExecutedOperations.size());
+        });
+    }
+
+    public Observable<Integer> getPoppedOperationsSize() {
+        return Observable.create(emitter -> {
+            emitter.onNext(mPoppedOperations.size());
         });
     }
 }
