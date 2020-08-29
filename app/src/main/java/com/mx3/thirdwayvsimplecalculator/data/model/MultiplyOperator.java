@@ -16,6 +16,6 @@ public class MultiplyOperator extends Operator {
 
     @Override
     public char getChar() {
-        return '*';
+        return 'x';
     }
 }

@@ -14,14 +14,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <!-- TODO surround text view with a box and style it -->
         <com.google.android.material.textview.MaterialTextView
-            style="@style/Widget.App.TextView"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            style="@style/Widget.App.TextView.OperationRecordItem"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/background_operation_record_item"
             android:text="@{operation.operatorAndSecondOperandString}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="+ 7" />
 

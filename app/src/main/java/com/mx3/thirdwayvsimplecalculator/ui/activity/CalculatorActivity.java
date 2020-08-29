@@ -39,16 +39,17 @@ public class CalculatorActivity extends AppCompatActivity implements OperationRe
         mBinding.setViewModel(mViewModel);
         mBinding.setLifecycleOwner(this);
 
-        mViewModel.getErrorMessageLiveData().observe(CalculatorActivity.this, errorMessage -> {
-            Snackbar.make(mBinding.calculatorButtonsLayout.equalButton, errorMessage.getMessageResourceId(),
-                    Snackbar.LENGTH_LONG).show();
-        });
+        mViewModel.getErrorMessageLiveData().observe(CalculatorActivity.this,
+                errorMessage -> Snackbar.make(mBinding.calculatorButtonsLayout.equalButton,
+                        errorMessage.getMessageResourceId(), Snackbar.LENGTH_LONG).show());
+
+        mViewModel.getOperationRecordsLiveData().observe(CalculatorActivity.this,
+                operations -> mOperationRecordAdapter.setDataList(operations));
     }
 
     private void setupOperationRecordsRecyclerView() {
-        // TODO implement connection between viewmodel and adapter and its operations
         mOperationRecordAdapter = new OperationRecordAdapter(this, new ArrayList<>());
-        mBinding.previousOperationsRecyclerView.setAdapter(mOperationRecordAdapter);
+        mBinding.operationsRecordsRecyclerView.setAdapter(mOperationRecordAdapter);
     }
 
 

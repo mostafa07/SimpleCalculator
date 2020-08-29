@@ -2,24 +2,27 @@ package com.mx3.thirdwayvsimplecalculator.data.repository;
 
 import com.mx3.thirdwayvsimplecalculator.data.model.Operation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
-import io.reactivex.rxjava3.core.Observable;
+import rx.Observable;
 
 public class CalculatorRepository {
 
     private static final String LOG_TAG = CalculatorRepository.class.getSimpleName();
+    private static final int ZERO_POSITION = 0;
 
     private static CalculatorRepository sCalculatorRepositoryInstance;
 
-    private Stack<Operation> mOperationsStack;
-    private Stack<Operation> mPoppedOperationsStack;
+    private List<Operation> mExecutedOperations;
+    private Stack<Operation> mPoppedOperations;
 
     // Constructor
 
     private CalculatorRepository() {
-        mOperationsStack = new Stack<>();
-        mPoppedOperationsStack = new Stack<>();
+        mExecutedOperations = new ArrayList<>();
+        mPoppedOperations = new Stack<>();
     }
 
     public static CalculatorRepository getInstance() {
@@ -32,17 +35,34 @@ public class CalculatorRepository {
     }
 
 
-    // TODO modify implementation as needed
-    public Observable<Stack<Operation>> getOperationsStack() {
+    public Observable<List<Operation>> getOperations() {
+        return Observable.create(emitter -> emitter.onNext(mExecutedOperations));
+    }
+
+    public Observable<List<Operation>> getPoppedOperations() {
+        return Observable.create(emitter -> emitter.onNext(mPoppedOperations));
+    }
+
+    public Observable<Operation> insertOperation(Operation operation) {
         return Observable.create(emitter -> {
-            emitter.onNext(mOperationsStack);
+            mExecutedOperations.add(ZERO_POSITION, operation);
+            emitter.onNext(operation);
         });
     }
 
-    // TODO modify implementation as needed
-    public Observable<Stack<Operation>> getPoppedOperationsStack() {
+    public Observable<Operation> undoOperation() {
         return Observable.create(emitter -> {
-            emitter.onNext(mPoppedOperationsStack);
+            final Operation operation = mExecutedOperations.remove(ZERO_POSITION);
+            mPoppedOperations.push(operation);
+            emitter.onNext(operation);
+        });
+    }
+
+    public Observable<Operation> redoOperation() {
+        return Observable.create(emitter -> {
+            final Operation operation = mPoppedOperations.pop();
+            mExecutedOperations.add(ZERO_POSITION, operation);
+            emitter.onNext(operation);
         });
     }
 }

@@ -18,26 +18,34 @@
         <!-- TODO add a background color for result text view -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/current_result_text_view"
-            style="@style/Widget.App.TextView"
+            style="@style/Widget.App.TextView.CalculationResult"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/background_operation_record_item"
             android:text="@{viewModel.currentOperationLiveData.firstOperand.string}"
-            app:layout_constraintBottom_toTopOf="@id/previous_operations_recycler_view"
+            app:layout_constraintBottom_toTopOf="@id/operations_records_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="3"
             tools:text="888" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/previous_operations_recycler_view"
+            android:id="@+id/operations_records_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/current_result_text_view"
+            app:layout_constraintVertical_weight="2"
             tools:listitem="@layout/item_operation_record" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -51,7 +59,7 @@
             android:id="@+id/separator_view"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorDarkGray"
             app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

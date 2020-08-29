@@ -15,6 +15,8 @@ import com.mx3.thirdwayvsimplecalculator.data.model.factory.OperatorFactory;
 import com.mx3.thirdwayvsimplecalculator.data.repository.CalculatorRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CalculatorViewModel extends ViewModel {
 
@@ -24,6 +26,7 @@ public class CalculatorViewModel extends ViewModel {
 
     private CalculatorRepository mCalculatorRepository;
 
+    private MutableLiveData<List<Operation>> mOperationRecordsMutableLiveData;
     private MutableLiveData<Operation> mCurrentOperationMutableLiveData;
     private MutableLiveData<String> mSecondOperandStringMutableLiveData;
 
@@ -39,6 +42,7 @@ public class CalculatorViewModel extends ViewModel {
     public CalculatorViewModel() {
         mCalculatorRepository = CalculatorRepository.getInstance();
 
+        mOperationRecordsMutableLiveData = new MutableLiveData<>(new ArrayList<>());
         mCurrentOperationMutableLiveData = new MutableLiveData<>(new Operation(INITIAL_RESULT, null, null));
         mSecondOperandStringMutableLiveData = new MutableLiveData<>("");
 
@@ -95,7 +99,12 @@ public class CalculatorViewModel extends ViewModel {
                 currentOperation.setSecondOperand(new Operand(mSecondOperandStringMutableLiveData.getValue()));
                 final BigDecimal operationResult = currentOperation.evaluate();
 
-                // TODO store result into stack
+                // TODO test insert functionality
+                mCalculatorRepository.insertOperation(currentOperation).subscribe(operation -> {
+                    final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
+                    operationRecordsList.add(0, operation);
+                    mOperationRecordsMutableLiveData.setValue(operationRecordsList);
+                }, Throwable::printStackTrace);
 
                 final Operation nextOperation = new Operation(new Operand(operationResult), null, null);
                 mCurrentOperationMutableLiveData.setValue(nextOperation);
@@ -108,6 +117,7 @@ public class CalculatorViewModel extends ViewModel {
             mIsRedoButtonEnabledMutableLiveData.setValue(true);
             mIsEqualButtonEnabledMutableLiveData.setValue(false);
         }
+
     }
 
     public void onUndoButtonClicked() {
@@ -120,6 +130,14 @@ public class CalculatorViewModel extends ViewModel {
 
 
     // Getters and setters
+
+    public LiveData<List<Operation>> getOperationRecordsLiveData() {
+        return mOperationRecordsMutableLiveData;
+    }
+
+    public void setOperationRecordsLiveData(List<Operation> operationRecordsList) {
+        this.mOperationRecordsMutableLiveData.setValue(operationRecordsList);
+    }
 
     public LiveData<Operation> getCurrentOperationLiveData() {
         return mCurrentOperationMutableLiveData;
