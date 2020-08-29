@@ -35,7 +35,7 @@ public class OperationRecordAdapter extends RecyclerView.Adapter<OperationRecord
 
     public interface OperationRecordClickHandler {
 
-        void onItemClick(Operation operation);
+        void onItemClick(int position);
     }
 
 
@@ -119,7 +119,7 @@ public class OperationRecordAdapter extends RecyclerView.Adapter<OperationRecord
 
         @Override
         public void onClick(View view) {
-            mClickHandler.onItemClick(mDataList.get(getAdapterPosition()));
+            mClickHandler.onItemClick(getAdapterPosition());
         }
     }
 }

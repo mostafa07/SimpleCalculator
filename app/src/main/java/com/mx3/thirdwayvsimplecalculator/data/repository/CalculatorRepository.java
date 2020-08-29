@@ -50,9 +50,9 @@ public class CalculatorRepository {
         });
     }
 
-    public Observable<Operation> undoOperation() {
+    public Observable<Operation> undoOperation(int position) {
         return Observable.create(emitter -> {
-            final Operation operation = mExecutedOperations.remove(ZERO_POSITION);
+            final Operation operation = mExecutedOperations.remove(position);
             mPoppedOperations.push(operation);
             emitter.onNext(operation);
         });

@@ -18,4 +18,9 @@ public class PlusOperator extends Operator {
     public char getChar() {
         return '+';
     }
+
+    @Override
+    public char getInverseChar() {
+        return '-';
+    }
 }

@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.mx3.thirdwayvsimplecalculator.R;
-import com.mx3.thirdwayvsimplecalculator.data.model.Operation;
 import com.mx3.thirdwayvsimplecalculator.databinding.ActivityCalculatorBinding;
 import com.mx3.thirdwayvsimplecalculator.ui.adapter.OperationRecordAdapter;
 import com.mx3.thirdwayvsimplecalculator.ui.viewmodel.CalculatorViewModel;
@@ -39,12 +38,12 @@ public class CalculatorActivity extends AppCompatActivity implements OperationRe
         mBinding.setViewModel(mViewModel);
         mBinding.setLifecycleOwner(this);
 
+        mViewModel.getOperationRecordsLiveData().observe(CalculatorActivity.this,
+                operations -> mOperationRecordAdapter.setDataList(operations));
+
         mViewModel.getErrorMessageLiveData().observe(CalculatorActivity.this,
                 errorMessage -> Snackbar.make(mBinding.calculatorButtonsLayout.equalButton,
                         errorMessage.getMessageResourceId(), Snackbar.LENGTH_LONG).show());
-
-        mViewModel.getOperationRecordsLiveData().observe(CalculatorActivity.this,
-                operations -> mOperationRecordAdapter.setDataList(operations));
     }
 
     private void setupOperationRecordsRecyclerView() {
@@ -54,7 +53,7 @@ public class CalculatorActivity extends AppCompatActivity implements OperationRe
 
 
     @Override
-    public void onItemClick(Operation operation) {
-        // TODO implement item undo functionality
+    public void onItemClick(int position) {
+        mViewModel.undoClickedOperationRecordItem(position);
     }
 }

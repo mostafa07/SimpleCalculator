@@ -11,6 +11,7 @@ import com.mx3.thirdwayvsimplecalculator.data.model.DivideOperator;
 import com.mx3.thirdwayvsimplecalculator.data.model.Message;
 import com.mx3.thirdwayvsimplecalculator.data.model.Operand;
 import com.mx3.thirdwayvsimplecalculator.data.model.Operation;
+import com.mx3.thirdwayvsimplecalculator.data.model.Operator;
 import com.mx3.thirdwayvsimplecalculator.data.model.factory.OperatorFactory;
 import com.mx3.thirdwayvsimplecalculator.data.repository.CalculatorRepository;
 
@@ -116,18 +117,7 @@ public class CalculatorViewModel extends ViewModel {
     }
 
     public void onUndoButtonClicked() {
-        mCalculatorRepository.undoOperation().subscribe(operation -> {
-            final BigDecimal operationUndoResult = mOperationRecordsMutableLiveData.getValue().size() == 1 ?
-                    BigDecimal.ZERO : operation.undo();
-            final Operation nextOperation = new Operation(new Operand(operationUndoResult), null, null);
-            mCurrentOperationMutableLiveData.setValue(nextOperation);
-
-            final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
-            operationRecordsList.remove(ZERO_POSITION);
-            mOperationRecordsMutableLiveData.setValue(operationRecordsList);
-
-            resetToInitialStates();
-        }, Throwable::printStackTrace);
+        undoLastOperation();
     }
 
     public void onRedoButtonClicked() {
@@ -144,6 +134,37 @@ public class CalculatorViewModel extends ViewModel {
         }, Throwable::printStackTrace);
     }
 
+    public void undoClickedOperationRecordItem(int position) {
+        if (position == ZERO_POSITION) {
+            undoLastOperation();
+        } else {
+            mCalculatorRepository.undoOperation(position).subscribe(clickedOperation -> {
+                final Operand firstOperand = new Operand(mCurrentOperationMutableLiveData.getValue().getFirstOperand().getValue());
+                final Operand secondOperand = new Operand(clickedOperation.getSecondOperand().getValue());
+                final Operator inverseOperator = OperatorFactory.getInstance().getOperator(clickedOperation.getOperator().getInverseChar());
+                final Operation operationUndo = new Operation(firstOperand, secondOperand, inverseOperator);
+                final BigDecimal operationUndoResult = operationUndo.evaluate();
+
+//                mCalculatorRepository.insertOperation(operationUndo).subscribe(operation -> {
+//                    final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
+//                    operationRecordsList.add(ZERO_POSITION, operation);
+//                    mOperationRecordsMutableLiveData.setValue(operationRecordsList);
+//                }, Throwable::printStackTrace);
+
+                final Operation nextOperation = new Operation(new Operand(operationUndoResult), null, null);
+                mCurrentOperationMutableLiveData.setValue(nextOperation);
+
+                final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
+                operationRecordsList.remove(position);
+                mOperationRecordsMutableLiveData.setValue(operationRecordsList);
+
+                resetToInitialStates();
+            }, Throwable::printStackTrace);
+        }
+    }
+
+
+    // Helper Methods
 
     private void resetToInitialStates() {
         mSecondOperandStringMutableLiveData.setValue("");
@@ -168,6 +189,20 @@ public class CalculatorViewModel extends ViewModel {
         });
     }
 
+    private void undoLastOperation() {
+        mCalculatorRepository.undoOperation(ZERO_POSITION).subscribe(operation -> {
+            final BigDecimal operationUndoResult = mOperationRecordsMutableLiveData.getValue().size() == 1 ?
+                    BigDecimal.ZERO : operation.undo();
+            final Operation nextOperation = new Operation(new Operand(operationUndoResult), null, null);
+            mCurrentOperationMutableLiveData.setValue(nextOperation);
+
+            final List<Operation> operationRecordsList = mOperationRecordsMutableLiveData.getValue();
+            operationRecordsList.remove(ZERO_POSITION);
+            mOperationRecordsMutableLiveData.setValue(operationRecordsList);
+
+            resetToInitialStates();
+        }, Throwable::printStackTrace);
+    }
 
     // Getters and setters
 

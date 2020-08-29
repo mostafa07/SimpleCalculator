@@ -18,4 +18,9 @@ public class MultiplyOperator extends Operator {
     public char getChar() {
         return 'x';
     }
+
+    @Override
+    public char getInverseChar() {
+        return '÷';
+    }
 }

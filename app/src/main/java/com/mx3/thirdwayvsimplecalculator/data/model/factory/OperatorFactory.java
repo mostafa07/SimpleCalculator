@@ -42,4 +42,19 @@ public class OperatorFactory {
                 return null;
         }
     }
+
+    public Operator getOperator(char operatorChar) {
+        switch (operatorChar) {
+            case '+':
+                return new PlusOperator();
+            case '-':
+                return new MinusOperator();
+            case 'x':
+                return new MultiplyOperator();
+            case '÷':
+                return new DivideOperator();
+            default:
+                return null;
+        }
+    }
 }

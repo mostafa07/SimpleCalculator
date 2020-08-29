@@ -25,4 +25,9 @@ public class DivideOperator extends Operator {
     public char getChar() {
         return '÷';
     }
+
+    @Override
+    public char getInverseChar() {
+        return 'x';
+    }
 }

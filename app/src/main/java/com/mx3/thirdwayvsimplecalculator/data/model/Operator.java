@@ -5,8 +5,7 @@ import java.math.BigDecimal;
 public abstract class Operator {
 
     // Constructor
-
-    public Operator() {
+    protected Operator() {
     }
 
 
@@ -17,4 +16,6 @@ public abstract class Operator {
     public abstract BigDecimal reverse(Operand first, Operand second);
 
     public abstract char getChar();
+
+    public abstract char getInverseChar();
 }
